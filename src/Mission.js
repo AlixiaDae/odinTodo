@@ -10,8 +10,16 @@ export default class Mission {
         return this.name
     }
 
-    getQuests() {
+    getObjectives() {
         return this.objectives
+    }
+
+    setObjectives(objectives) {
+        this.objectives = objectives
+    }
+
+    getObjective(objName) {
+        return this.objectives.find(obj => obj.getName() === objName)
     }
 
     addObjective(newObj) {

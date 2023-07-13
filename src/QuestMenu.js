@@ -7,8 +7,16 @@ export class QuestMenu {
         this.missions.push(new Mission("This Week"))
     }
 
+    setMissions(missions) {
+        this.missions = missions
+    }
+
     getMissions() {
         return this.missions
+    }
+
+    getMission(missionName) {
+        return this.missions.find(mission => mission.getName() === missionName)
     }
 
     addMission(newMission) {
@@ -16,7 +24,7 @@ export class QuestMenu {
             this.missions.push(newMission)
         }
     }
-
+    
     deleteMission(missionName) {
         let missionToDelete = this.missions.find(mission => mission.getName() === missionName) 
         this.missions.splice(this.missions.indexOf(missionToDelete), 1)
