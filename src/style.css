@@ -17,7 +17,7 @@ body {
     margin: 0;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     margin: 0;
 }
 
@@ -53,13 +53,31 @@ h1 {
     grid-area: "header";
     border-bottom: 1px solid black;
     text-align: center;
-    padding: 20px;
+    padding: 12px;
+    font-size: 2rem;
 }
 
 .objective-box {
     display: grid;
     grid-area: 1/2/3/3;
     grid-template-rows: 8% 92%;
+}
+
+ul {
+    list-style-type: none;
+    padding: 1rem;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 30px);
+    grid-auto-flow: row;
+    align-items: center;
+    row-gap: 1rem;
+    text-align: center;
+}
+
+.mission {
+    background-color: lightblue;
 }
 
 
