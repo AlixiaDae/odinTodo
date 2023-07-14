@@ -85,9 +85,16 @@ ul {
 
 .mission {
     border-radius: 5px;
-    padding: 3px;
+    align-self: center;
+    padding: 4px;
+    padding-left: 10px;
     font-size: 1rem;
     background-color: lightblue;
+}
+
+.mission:hover {
+    background-color: rgb(137, 173, 185);
+    cursor: pointer;
 }
 
 /*Objectives*/
@@ -96,6 +103,11 @@ ul {
     position: absolute;
     left: 35%;
     top: 10%;
+}
+
+.objective {
+    padding-left: 3rem;
+    align-self: center;
 }
 
 
