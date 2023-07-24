@@ -1,9 +1,10 @@
+/* eslint-disable class-methods-use-this */
 import Mission from "./Mission"
 import Objective from "./Objective"
-import { QuestMenu } from "./QuestMenu"
+import QuestMenu from "./QuestMenu"
 
 
-export class Storage {
+export  default class Storage {  
     saveQuestMenu(data) {
         localStorage.setItem("questmenu", JSON.stringify(data))
     }
@@ -31,7 +32,7 @@ export class Storage {
         return questsMenu
     }
 
-    //Make sure parameters with -Name has .getName() or it will delete wrong item
+    // Make sure parameters with -Name has .getName() or it will delete wrong item
 
     addMission(mission) {
         const questsMenu = this.getQuestMenu()

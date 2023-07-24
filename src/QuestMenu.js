@@ -1,6 +1,6 @@
 import Mission from "./Mission"
 
-export class QuestMenu {
+export default class QuestMenu {
     constructor() {
         this.missions = []
         this.missions.push(new Mission("Today"))
@@ -26,7 +26,7 @@ export class QuestMenu {
     }
     
     deleteMission(missionName) {
-        let missionToDelete = this.missions.find(mission => mission.getName() === missionName) 
+        const missionToDelete = this.missions.find(mission => mission.getName() === missionName) 
         this.missions.splice(this.missions.indexOf(missionToDelete), 1)
     }
 

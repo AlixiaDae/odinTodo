@@ -1,36 +1,40 @@
-import Objective from "./Objective"
+/* eslint-disable no-unused-vars */
+import Objective from './Objective';
 
 export default class Mission {
-    constructor(name) {
-        this.name = name
-        this.objectives = []
-    }
+  constructor(name) {
+    this.name = name;
+    this.objectives = [];
+  }
 
-    getName() {
-        return this.name
-    }
+  getName() {
+    return this.name;
+  }
 
-    getObjectives() {
-        return this.objectives
-    }
+  setName(newName) {
+    this.name = newName;
+  }
 
-    setObjectives(objectives) {
-        this.objectives = objectives
-    }
+  getObjectives() {
+    return this.objectives;
+  }
 
-    getObjective(objName) {
-        return this.objectives.find(obj => obj.getName() === objName)
-    }
+  setObjectives(objectives) {
+    this.objectives = objectives;
+  }
 
-    addObjective(newObj) {
-        if(!this.objectives.find(obj => obj.getName() === newObj.name)) {
-            this.objectives.push(newObj)
-        }
-    }
+  getObjective(objName) {
+    return this.objectives.find((obj) => obj.getName() === objName);
+  }
 
-    deleteObjective(objName) {
-        let objToDelete = this.objectives.find(obj => obj.getName() === objName)
-        this.objectives.splice(this.objectives.indexOf(objToDelete), 1)
+  addObjective(newObj) {
+    if (!this.objectives.find((obj) => obj.getName() === newObj.name)) {
+      this.objectives.push(newObj);
     }
+  }
 
+  deleteObjective(objName) {
+    const objToDelete = this.objectives.find((obj) => obj.getName() === objName);
+    this.objectives.splice(this.objectives.indexOf(objToDelete), 1);
+  }
 }
