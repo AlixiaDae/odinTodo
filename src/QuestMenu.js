@@ -1,4 +1,6 @@
+/* eslint-disable no-useless-return */
 import Mission from "./Mission"
+import Objective from "./Objective"
 
 export default class QuestMenu {
     constructor() {
@@ -30,4 +32,16 @@ export default class QuestMenu {
         this.missions.splice(this.missions.indexOf(missionToDelete), 1)
     }
 
+    updateTodayMission() {
+        this.getMission("Today").objectives = []
+
+        this.missions.forEach((mission) => {
+            if (mission.getName() === "Today") return
+            const todayObjectives = mission.getTodayObjectives()
+            todayObjectives.forEach((objective) => {
+                const objectiveName = `${objective.getName()}`
+                this.getMission("Today").addObjective(new Objective(objectiveName, objective.getDateFormatted()))
+            })
+        })
+    }
 }

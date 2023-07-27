@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import Objective from './Objective';
+import { toDate, isToday, isThisWeek, subDays } from 'date-fns'
 
 export default class Mission {
   constructor(name) {
@@ -34,7 +33,7 @@ export default class Mission {
   }
 
   deleteObjective(objName) {
-    const objToDelete = this.objectives.find((obj) => obj.getName() === objName);
-    this.objectives.splice(this.objectives.indexOf(objToDelete), 1);
+    this.objectives = this.objectives.filter((obj) => obj.name !== objName)
   }
+
 }

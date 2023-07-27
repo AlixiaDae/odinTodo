@@ -1,5 +1,5 @@
 export default class Objective {
-    constructor(name, description, dueDate) {
+    constructor(name, description, dueDate = "today") {
         this.name = name
         this.description = description
         this.dueDate = dueDate
@@ -21,8 +21,14 @@ export default class Objective {
         this.description = newDescription
     }
 
-    getDueDate() {
-        return this.dueDate
-    }
-
+    getDateFormatted() {
+        if (this.dueDate === "today") {
+            return "today"
+        } else {
+            const day = this.dueDate.split('/')[0]
+            const month = this.dueDate.split('/')[1]
+            const year = this.dueDate.split('/')[2]
+            return `${month}/${day}/${year}`
+        }
+      }
 }

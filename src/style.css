@@ -97,6 +97,20 @@ ul {
     cursor: pointer;
 }
 
+.button-box {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    align-items: center;
+}
+
+#add-objective,
+#add-mission {
+    width: 150px;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
 /*Objectives*/
 
 .empty-obj-message {

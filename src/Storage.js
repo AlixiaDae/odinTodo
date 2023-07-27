@@ -52,9 +52,9 @@ export  default class Storage {
         this.saveQuestMenu(questsMenu)
     }
 
-    deleteObjective(missionName, objective) {
+    deleteObjective(missionName, objName) {
         const questsMenu = this.getQuestMenu()
-        questsMenu.getMission(missionName).deleteObjective(objective)
+        questsMenu.getMission(missionName).deleteObjective(objName)
         this.saveQuestMenu(questsMenu)
     }
 
@@ -63,5 +63,4 @@ export  default class Storage {
         questsMenu.getMission(missionName).getObjective(objName).setName(newObjName)
         this.saveQuestMenu(questsMenu)
     }
-
 }
