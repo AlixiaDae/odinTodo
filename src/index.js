@@ -4,13 +4,14 @@ import Storage from './Storage';
 
 const UI = (() => {
   const main = document.querySelector('.main');
+  const sidebar = document.querySelector('.sidebar')
   const test = new Storage();
 
   // Dummy Missions
   const mission = new Mission('Testing mission');
   test.addMission(mission);
 
-  // TODO function checkDueDate() using date fns
+  // checks storage for objectives due today and moves them to Today's mission
   function checkStoredObjectives() {
     const storedTodos = test.getQuestMenu().getMissions()
     console.log(storedTodos)
@@ -32,7 +33,6 @@ const UI = (() => {
     }
     console.log(test.getQuestMenu())
   }
-  // for each objective, check due date. if date == to date.now, move objective to "Today" mission and delete it from its old mission
 
   // Check if objective is due today
   function isToday(obj) {
@@ -48,8 +48,6 @@ const UI = (() => {
       return false
     }
   }
-  // checkIfToday()
-  // TODO function moveObjectiveToToday()
 
   // Dummy Objectives
   
@@ -67,13 +65,60 @@ const UI = (() => {
   const addMissionBtn = document.getElementById('add-mission');
   const addObjectiveBtn = document.getElementById('add-objective');
   // TODO add mission using button
+  
   // TODO create form for mission submission
+  const missionFormBox = document.createElement("div")
+  missionFormBox.style.display = "none"
+  missionFormBox.classList.add("mission-form-box")
+
+  const missionForm = document.createElement("form")
+
+  const missionFieldSet = document.createElement("fieldset")
+
+  const missionFormLegend = document.createElement("legend")
+  missionFormLegend.classList.add("mission-legend")
+  missionFormLegend.textContent = "Create New Mission"
+
+  const missionNameLabel = document.createElement("label")
+  missionNameLabel.setAttribute("for", "name")
+  missionNameLabel.textContent = "Mission Name:"
+
+  const missionNameInput = document.createElement("input")
+  missionNameInput.setAttribute("autocomplete", "off")
+  missionNameInput.id = "name"
+  missionNameInput.placeholder = "Enter the mission name"
+
+  const createMissionBtn = document.createElement("button")
+  createMissionBtn.id = "create-mission-btn"
+  createMissionBtn.textContent = "Create Mission"
+
+  createMissionBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const missionName = missionNameInput.value
+    const newMission = new Mission(missionName)
+    test.addMission(newMission)
+    missionFormBox.style.display = "none"
+    renderMissions()
+  })
+  
+  missionFormBox.appendChild(missionForm)
+  missionForm.append(missionFieldSet)
+  missionFieldSet.append(missionFormLegend, missionNameLabel, missionNameInput, createMissionBtn)
+  sidebar.appendChild(missionFormBox)
+
+  addMissionBtn.addEventListener("click", () => {
+    if(missionFormBox.style.display === "block") {
+      missionFormBox.style.display = "none"
+    } else {
+      missionFormBox.style.display = "block"
+    }
+  })
+  
   // TODO add objective using button
   // TODO create form for objective submission
 
-  // this function takes mission object so element texts must be taken from its properties
-
   // TODO enable editing of mission name(?)
+  // creates mission element using mission object
   function createMissionElement(mission) {
     const missionElement = document.createElement('li');
     missionElement.classList.add('mission');
@@ -90,8 +135,7 @@ const UI = (() => {
     return missionElement;
   }
 
-  // this function takes objective object so element texts must be taken from its properties
-
+  // creates objective element using objective object
   function createObjectiveElement(objective) {
     const objectiveElement = document.createElement('li');
     objectiveElement.classList.add('objective');
@@ -112,7 +156,6 @@ const UI = (() => {
     element.textContent = '';
   }
 
-  // Rendering functions
   function renderObjectives(chosenMission) {
     clear(objectivesBox);
     const objectivesArray = chosenMission.getObjectives();
