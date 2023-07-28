@@ -28,8 +28,9 @@ export default class QuestMenu {
     }
     
     deleteMission(missionName) {
-        const missionToDelete = this.missions.find(mission => mission.getName() === missionName) 
-        this.missions.splice(this.missions.indexOf(missionToDelete), 1)
+        this.missions = this.missions.filter((mission) => mission.name !== missionName)
+        /* const missionToDelete = this.missions.find(mission => mission.getName() === missionName) 
+        this.missions.splice(this.missions.indexOf(missionToDelete), 1) */
     }
 
     updateTodayMission() {

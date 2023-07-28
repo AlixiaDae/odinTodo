@@ -1,13 +1,13 @@
 import Mission from './Mission';
 import Objective from './Objective';
 import Storage from './Storage';
-import X from './close.png'
 
 const UI = (() => {
   const main = document.querySelector('.main');
   const sidebar = document.querySelector('.sidebar')
   const test = new Storage();
 
+  
   // Dummy Missions
   const mission = new Mission('Testing mission');
   test.addMission(mission);
@@ -50,16 +50,15 @@ const UI = (() => {
   test.addObjective("Today", todayObjective)
   const weekObjecetive = new Objective("For the week", "weeeek", "8/8/2023")
   test.addObjective("This Week", weekObjecetive)
-  const tryingToToday = new Objective("Move to Today", "moving", "27/7/2023")
-  test.addObjective("Testing mission", tryingToToday)
+  // const tryingToToday = new Objective("Move to Today", "moving", "27/7/2023")
+  // test.addObjective("Testing mission", tryingToToday)
 
   const missionsBox = document.querySelector('.missions');
   const objectivesBox = document.querySelector('.objectives');
   const emptyMessage = document.querySelector('.empty-obj-message');
 
+  // Add mission
   const addMissionBtn = document.getElementById('add-mission');
-  const addObjectiveBtn = document.getElementById('add-objective');
-  // TODO add mission using button
   
   const missionFormBox = document.createElement("div")
   missionFormBox.style.display = "none"
@@ -105,10 +104,25 @@ const UI = (() => {
       missionFormBox.style.display = "none"
     } else {
       missionFormBox.style.display = "block"
+      missionNameInput.focus()
     }
   })
   
   // TODO add objective using button
+
+  // Add objective
+  const addObjectiveBtn = document.getElementById('add-objective');
+
+  const objectiveFormBox = document.createElement("div")
+  objectiveFormBox.classList.add("objective-form-box")
+
+  const objectiveForm = document.createElement("form")
+
+  const objectiveFieldset = document.createElement("fieldset")
+
+  const objectiveFormLegend = document.createElement("legend")
+  objectiveFormLegend.classList.add("objective-legend")
+  objectiveFormLegend.textContent = "Create new objective"
   // TODO create form for objective submission
 
   // TODO enable editing of mission name(?)
@@ -116,11 +130,8 @@ const UI = (() => {
   function createMissionElement(mission) {
     const missionElement = document.createElement('li');
     missionElement.classList.add('mission');
-    missionElement.setAttribute('role', 'button');
     const missionText = document.createElement('h3');
     missionText.textContent = mission.getName();
-
-    
 
     missionElement.addEventListener('click', () => {
       renderObjectives(mission);
@@ -134,18 +145,18 @@ const UI = (() => {
 
   function createDeleteBtn(missionName, parentElement) {
     if(missionName !== "Today" && missionName !== "This Week") {
-      const deleteMissionBtn = document.createElement("button")
-      deleteMissionBtn.type = "button"
-      const deleteMissionImg = document.createElement("img")
-      deleteMissionImg.classList.add("delete-img")
-      deleteMissionImg.src = X
+      const deleteMissionImg = document.createElement("i")
+      deleteMissionImg.setAttribute("role", "button")
+      deleteMissionImg.classList.add("fa-solid", "fa-square-xmark", "fa-lg")
+      
 
-      deleteMissionBtn.addEventListener("click", () => {
-        test.deleteMission(mission.getName())
+      deleteMissionImg.addEventListener("click", () => {
+        test.deleteMission(missionName)
         renderMissions()
+        console.log(test.getQuestMenu().getMission("Today"))
+        // renderObjectives(test.getQuestMenu().getMission("Today"))
       })
-      deleteMissionBtn.appendChild(deleteMissionImg)
-      parentElement.appendChild(deleteMissionBtn)
+      parentElement.appendChild(deleteMissionImg)
     } 
   }
 
@@ -169,11 +180,11 @@ const UI = (() => {
   }
 
   function clear(element) {
-    element.textContent = '';
+    element.innerHTML = '';
   }
 
   function renderObjectives(chosenMission) {
-    clear(objectivesBox);
+    clear(objectivesBox)
     const objectivesArray = chosenMission.getObjectives();
     // if array is empty create message
     if (objectivesArray.length !== 0) {

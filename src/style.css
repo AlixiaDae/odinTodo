@@ -105,9 +105,15 @@ ul {
     height: 23px;
 }
 
-.delete-img {
-    align-items: center;
-    height: 8.5px;
+.fa-solid {
+    align-self: center;
+    margin-right: 0.3rem;
+    margin-bottom: 0.1rem;
+}
+
+.fa-solid:hover {
+    color: white;
+    cursor: pointer;
 }
 
 .mission > button:hover {
@@ -182,3 +188,4 @@ form > button {
 footer {
     padding: 1rem;
 }
+
