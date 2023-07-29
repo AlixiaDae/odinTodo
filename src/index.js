@@ -48,7 +48,7 @@ const UI = (() => {
   
   const todayObjective = new Objective("Today objective", "todaaaay")
   test.addObjective("Today", todayObjective)
-  const weekObjecetive = new Objective("For the week", "weeeek", "8/8/2023")
+  const weekObjecetive = new Objective("For the week", "weeeek", "2023-8-8")
   test.addObjective("This Week", weekObjecetive)
   // const tryingToToday = new Objective("Move to Today", "moving", "27/7/2023")
   // test.addObjective("Testing mission", tryingToToday)
@@ -88,6 +88,9 @@ const UI = (() => {
   createMissionBtn.addEventListener("click", (e) => {
     e.preventDefault()
     const missionName = missionNameInput.value
+    if (missionNameInput.value === "") {
+      return
+    }
     const newMission = new Mission(missionName)
     test.addMission(newMission)
     missionFormBox.style.display = "none"
@@ -96,7 +99,8 @@ const UI = (() => {
   
   missionFormBox.appendChild(missionForm)
   missionForm.append(missionFieldSet)
-  missionFieldSet.append(missionFormLegend, missionNameLabel, missionNameInput, createMissionBtn)
+  missionFieldSet.append(missionFormLegend, missionNameLabel, createMissionBtn)
+  missionNameLabel.appendChild(missionNameInput)
   sidebar.appendChild(missionFormBox)
 
   addMissionBtn.addEventListener("click", () => {
@@ -108,12 +112,13 @@ const UI = (() => {
     }
   })
   
-  // TODO add objective using button
 
+  const contentBox = document.querySelector(".content-box")
   // Add objective
   const addObjectiveBtn = document.getElementById('add-objective');
 
   const objectiveFormBox = document.createElement("div")
+  objectiveFormBox.style.display = "none"
   objectiveFormBox.classList.add("objective-form-box")
 
   const objectiveForm = document.createElement("form")
@@ -123,7 +128,84 @@ const UI = (() => {
   const objectiveFormLegend = document.createElement("legend")
   objectiveFormLegend.classList.add("objective-legend")
   objectiveFormLegend.textContent = "Create new objective"
-  // TODO create form for objective submission
+
+  const objectiveNameLabel = document.createElement("label")
+  objectiveNameLabel.setAttribute("for", "oName")
+  objectiveNameLabel.textContent = "Objective Name: "
+
+  const objectiveNameInput = document.createElement("input")
+  objectiveNameInput.setAttribute("autocomplete", "off")
+  objectiveNameInput.id = "oName"
+  objectiveNameInput.placeholder = "Enter the objective name"
+
+  const objectiveDescriptionLabel = document.createElement("label")
+  objectiveDescriptionLabel.setAttribute("for", "oDescription")
+  objectiveDescriptionLabel.textContent = "Objective Description: "
+
+  const objectiveDescriptionInput = document.createElement("input")
+  objectiveDescriptionInput.setAttribute("autocomplete", "off")
+  objectiveDescriptionInput.id = "oDescription"
+  objectiveDescriptionInput.placeholder = "What is this objective about?"
+
+  const objectiveDueDateLabel = document.createElement("label")
+  objectiveDueDateLabel.setAttribute("for", "oDueDate")
+  objectiveDueDateLabel.textContent = "Objective Due Date: "
+
+  const objectiveDueDateInput = document.createElement("input")
+  objectiveDueDateInput.setAttribute("type", "date")
+  objectiveDueDateInput.id = "oDueDate"
+
+  const missionPickerLabel = document.createElement("label")
+  missionPickerLabel.setAttribute("for", "oMission")
+  missionPickerLabel.textContent = "Mission: "
+
+  const missionPickerInput = document.createElement("select")
+  missionPickerInput.setAttribute("name", "oMission")
+  missionPickerInput.id = "oMission"
+
+  for (const mission of test.getQuestMenu().getMissions()) {
+      const optionElement = document.createElement("option")
+      optionElement.setAttribute("value", `${mission.getName()}`)
+      optionElement.textContent = `${mission.getName()}`
+      missionPickerInput.appendChild(optionElement)
+    }
+
+  const createObjectiveBtn = document.createElement("button")
+  createObjectiveBtn.id = "create-objective-btn"
+  createObjectiveBtn.textContent = "Create Objective"
+
+  createObjectiveBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const objectiveName = objectiveNameInput.value
+    if (objectiveName === "") {
+      return
+    }
+    const objectiveDescription = objectiveDescriptionInput.value
+    const objectiveDueDate = objectiveDueDateInput.value
+    const objectiveMission = missionPickerInput.value
+    const newObjective = new Objective(objectiveName, objectiveDescription, objectiveDueDate)
+    test.addObjective(objectiveMission, newObjective)
+    objectiveFormBox.style.display = "none"
+    renderMissions()
+  })
+
+  objectiveFormBox.appendChild(objectiveForm)
+  objectiveForm.appendChild(objectiveFieldset)
+  objectiveFieldset.append(objectiveFormLegend, objectiveNameLabel, objectiveDescriptionLabel, objectiveDueDateLabel, missionPickerLabel, missionPickerInput, createObjectiveBtn)
+  objectiveNameLabel.appendChild(objectiveNameInput)
+  objectiveDescriptionLabel.appendChild(objectiveDescriptionInput)
+  objectiveDueDateLabel.appendChild(objectiveDueDateInput)
+  contentBox.appendChild(objectiveFormBox)
+
+  addObjectiveBtn.addEventListener("click", () => {
+    if (objectiveFormBox.style.display === "none") {
+      objectiveFormBox.style.display = "block"
+      objectiveNameInput.focus()
+    } else {
+      objectiveFormBox.style.display = "none"
+    }
+  })
+
 
   // TODO enable editing of mission name(?)
   // creates mission element using mission object
@@ -154,6 +236,7 @@ const UI = (() => {
         test.deleteMission(missionName)
         renderMissions()
         console.log(test.getQuestMenu().getMission("Today"))
+        
         // renderObjectives(test.getQuestMenu().getMission("Today"))
       })
       parentElement.appendChild(deleteMissionImg)
@@ -169,12 +252,24 @@ const UI = (() => {
     const objectiveText = document.createElement('h4');
     objectiveText.textContent = objective.getName();
 
-    // TODO add checkbox to delete objective after finished
-    // TODO add duedate
+    const objectiveCheckBox = document.createElement("input")
+    objectiveCheckBox.setAttribute("type", "checkbox")
+    objectiveCheckBox.id = objective.getName()
+    
     // TODO add listener to expand obj to show description
     // TODO listener/button to edit name, description, and date of objective
 
-    objectiveElement.appendChild(objectiveText);
+    objectiveElement.append(objectiveCheckBox, objectiveText)
+
+    if (objective.getDueDate() !== "") {
+      const objectiveDueDate = document.createElement("div")
+      if (objective.getDueDate() === "today") {
+        objectiveDueDate.textContent = "Today"
+      } else {
+        objectiveDueDate.textContent = objective.getDueDate()
+      }
+      objectiveElement.appendChild(objectiveDueDate)
+    }
 
     return objectiveElement;
   }
