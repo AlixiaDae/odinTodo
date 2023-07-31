@@ -242,6 +242,11 @@ const UI = (() => {
       missionElement.appendChild(deleteMissionImg)
     }
 
+    deleteMissionImg.addEventListener("click", () => {
+      test.deleteMission(missionText.textContent)
+      renderMissions()
+    })
+
     missionText.addEventListener("click", () => {
       if (missionText.textContent === "Today" || missionText.textContent === "This Week") {
         return
