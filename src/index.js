@@ -188,7 +188,7 @@ const UI = (() => {
     test.addObjective(objectiveMission, newObjective)
     objectiveFormBox.style.display = "none"
     renderMissions()
-    renderObjectives(test.getQuestMenu().getMission("Today"))
+    renderObjectives(test.getQuestMenu().getMission(missionPickerInput.value))
   })
 
   objectiveFormBox.appendChild(objectiveForm)
@@ -271,7 +271,7 @@ const UI = (() => {
   }
 
   // creates objective element using objective object
-  function createObjectiveElement(objective) {
+  function createObjectiveElement(objective, missionName) {
     const objectiveElement = document.createElement('li');
     objectiveElement.classList.add('objective');
     const objectiveText = document.createElement('h4');
@@ -280,6 +280,13 @@ const UI = (() => {
     const objectiveCheckBox = document.createElement("input")
     objectiveCheckBox.setAttribute("type", "checkbox")
     objectiveCheckBox.id = objective.getName()
+
+    objectiveCheckBox.addEventListener("click", () => {
+      if (objectiveCheckBox.checked) {
+        test.deleteObjective(missionName, objectiveText.textContent)
+        renderObjectives(test.getQuestMenu().getMission(missionName))
+      }
+    })
 
     // TODO animate description box
 
@@ -326,7 +333,7 @@ const UI = (() => {
       emptyMessage.style.display = 'block';
     }
     for (const objective of objectivesArray) {
-      objectivesBox.appendChild(createObjectiveElement(objective));
+      objectivesBox.appendChild(createObjectiveElement(objective, chosenMission.getName()));
     }
   }
 
@@ -344,7 +351,7 @@ const UI = (() => {
     renderMissions();
     const today = test.getQuestMenu().getMission('Today').getObjectives();
     for (const objective of today) {
-      objectivesBox.appendChild(createObjectiveElement(objective));
+      objectivesBox.appendChild(createObjectiveElement(objective, "Today"));
     }
   }
 
