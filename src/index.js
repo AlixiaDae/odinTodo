@@ -1,6 +1,7 @@
 import Mission from './Mission';
 import Objective from './Objective';
 import Storage from './Storage';
+import './assets/fontawesome/fontawesome'
 
 const UI = (() => {
   const main = document.querySelector('.main');
