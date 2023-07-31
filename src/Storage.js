@@ -46,6 +46,12 @@ export  default class Storage {
         this.saveQuestMenu(questsMenu)
     }
 
+    renameMission(oldMissionName, newMissionName) {
+        const questsMenu = this.getQuestMenu()
+        questsMenu.getMission(oldMissionName).setName(newMissionName)
+        this.saveQuestMenu(questsMenu)
+    }
+
     addObjective(missionName, objective) {
         const questsMenu = this.getQuestMenu()
         questsMenu.getMission(missionName).addObjective(objective)

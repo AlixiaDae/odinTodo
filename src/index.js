@@ -5,8 +5,8 @@ import Storage from './Storage';
 const UI = (() => {
   const main = document.querySelector('.main');
   const sidebar = document.querySelector('.sidebar')
+  // TODO change test
   const test = new Storage();
-
   
   // Dummy Missions
   const mission = new Mission('Testing mission');
@@ -57,6 +57,7 @@ const UI = (() => {
   const objectivesBox = document.querySelector('.objectives');
   const emptyMessage = document.querySelector('.empty-obj-message');
 
+  // TODO add a close button on form
   // Add mission
   const addMissionBtn = document.getElementById('add-mission');
   
@@ -187,6 +188,7 @@ const UI = (() => {
     test.addObjective(objectiveMission, newObjective)
     objectiveFormBox.style.display = "none"
     renderMissions()
+    renderObjectives(test.getQuestMenu().getMission("Today"))
   })
 
   objectiveFormBox.appendChild(objectiveForm)
@@ -206,8 +208,6 @@ const UI = (() => {
     }
   })
 
-
-  // TODO enable editing of mission name(?)
   // creates mission element using mission object
   function createMissionElement(mission) {
     const missionElement = document.createElement('li');
@@ -215,35 +215,55 @@ const UI = (() => {
     const missionText = document.createElement('h3');
     missionText.textContent = mission.getName();
 
+    const editNameLabel = document.createElement("label")
+    editNameLabel.setAttribute("for", "eName")
+    editNameLabel.textContent = "Edit mission name: "
+
+    const editNameInput = document.createElement("input")
+    editNameInput.setAttribute("autocomplete", "off")
+    editNameInput.id = "eName"
+    editNameInput.placeholder = "New mission name..."
+
+    editNameLabel.appendChild(editNameInput)
+
+    const deleteMissionImg = document.createElement("i")
+    deleteMissionImg.setAttribute("role", "button")
+    deleteMissionImg.classList.add("fa-solid", "fa-square-xmark", "fa-lg")
+
     missionElement.addEventListener('click', () => {
       renderObjectives(mission);
     });
 
     missionElement.appendChild(missionText);
-    createDeleteBtn(mission.getName(), missionElement)
+
+    if (missionText.textContent === "Today" || missionText.textContent === "This Week") {
+      return missionElement
+    } else {
+      missionElement.appendChild(deleteMissionImg)
+    }
+
+    missionText.addEventListener("click", () => {
+      if (missionText.textContent === "Today" || missionText.textContent === "This Week") {
+        return
+      }
+      missionElement.removeChild(missionText)
+      missionElement.removeChild(deleteMissionImg)
+      missionElement.appendChild(editNameLabel)
+      editNameInput.focus()
+    })
+
+    editNameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        if (editNameInput.value !== "") {
+          const oldMission = test.getQuestMenu().getMission(mission.getName())
+          test.renameMission(oldMission.getName(), editNameInput.value)
+          renderMissions()
+        }
+      }
+    })
 
     return missionElement;
   }
-
-  function createDeleteBtn(missionName, parentElement) {
-    if(missionName !== "Today" && missionName !== "This Week") {
-      const deleteMissionImg = document.createElement("i")
-      deleteMissionImg.setAttribute("role", "button")
-      deleteMissionImg.classList.add("fa-solid", "fa-square-xmark", "fa-lg")
-      
-
-      deleteMissionImg.addEventListener("click", () => {
-        test.deleteMission(missionName)
-        renderMissions()
-        console.log(test.getQuestMenu().getMission("Today"))
-        
-        // renderObjectives(test.getQuestMenu().getMission("Today"))
-      })
-      parentElement.appendChild(deleteMissionImg)
-    } 
-  }
-
-
 
   // creates objective element using objective object
   function createObjectiveElement(objective) {
@@ -255,11 +275,24 @@ const UI = (() => {
     const objectiveCheckBox = document.createElement("input")
     objectiveCheckBox.setAttribute("type", "checkbox")
     objectiveCheckBox.id = objective.getName()
+
+    // TODO animate description box
+
+    const objectiveDescriptionBox = document.createElement("div")
+    objectiveDescriptionBox.classList.add("objective-description")
+
+    const objectiveDescription = document.createElement("div")
     
     // TODO add listener to expand obj to show description
+    if (objective.getDescription() === "") {
+      objectiveDescription.textContent = "No description"
+    } else {
+      objectiveDescription.textContent = objective.getDescription()
+    }
     // TODO listener/button to edit name, description, and date of objective
 
     objectiveElement.append(objectiveCheckBox, objectiveText)
+    objectiveDescriptionBox.appendChild(objectiveDescription)
 
     if (objective.getDueDate() !== "") {
       const objectiveDueDate = document.createElement("div")
@@ -300,7 +333,6 @@ const UI = (() => {
     }
   }
 
-
   // render Today's mission and objectives when page loads
   function renderToday() {
     checkStoredObjectives()
@@ -311,9 +343,7 @@ const UI = (() => {
     }
   }
 
-  renderToday();
-  // console.log(test.getQuestMenu().missions);
-     
+  renderToday();  
 
   return main;
 })();
