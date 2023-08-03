@@ -32,6 +32,7 @@ export default class Objective {
             const day = this.dueDate.split('-')[2]
             const month = this.dueDate.split('-')[1]
             const year = this.dueDate.split('-')[0]
+            console.log(`${month}/${day}/${year}`)
             return `${month}/${day}/${year}`
         }
       }

@@ -37,7 +37,7 @@ const UI = (() => {
     const dateToday =  date.getDate()
     const dateMonth = date.getMonth() + 1
     const dateYear = date.getFullYear()
-    const fullDate = `${dateMonth}/${dateToday}/${dateYear}`
+    const fullDate = `0${dateMonth}/0${dateToday}/${dateYear}`
     if(obj.getDateFormatted() === "today" || obj.getDateFormatted() === fullDate) {
       return true
     } else {
@@ -49,15 +49,14 @@ const UI = (() => {
   
   const todayObjective = new Objective("Today objective", "todaaaay")
   test.addObjective("Today", todayObjective)
-  const weekObjecetive = new Objective("For the week", "weeeek", "2023-8-8")
+  const weekObjecetive = new Objective("For the week", "weeeek", "2023-08-08")
   test.addObjective("This Week", weekObjecetive)
   // const tryingToToday = new Objective("Move to Today", "moving", "27/7/2023")
   // test.addObjective("Testing mission", tryingToToday)
-
   const missionsBox = document.querySelector('.missions');
   const objectivesBox = document.querySelector('.objectives');
   const emptyMessage = document.querySelector('.empty-obj-message');
-
+  console.log(isToday(weekObjecetive))
   // TODO add a close button on form
   // Add mission
   const addMissionBtn = document.getElementById('add-mission');
@@ -273,7 +272,9 @@ const UI = (() => {
   // TODO add status to objective?
   // Creates objective element using objective object
   function createObjectiveElement(objective, missionName) {
-    const objectiveElement = document.createElement('li');
+    const objectiveElementBox = document.createElement('li')
+    objectiveElementBox.classList.add("objective-box")
+    const objectiveElement = document.createElement('div');
     objectiveElement.classList.add('objective');
     const objectiveText = document.createElement('h4');
     objectiveText.textContent = objective.getName();
@@ -302,7 +303,8 @@ const UI = (() => {
     }
     // TODO listener/button to edit name, description, and date of objective
 
-    objectiveElement.append(objectiveCheckBox, objectiveText, objectiveDescriptionBox)
+    objectiveElementBox.append(objectiveCheckBox, objectiveElement)
+    objectiveElement.append(objectiveText, objectiveDescriptionBox)
     objectiveDescriptionBox.appendChild(objectiveDescription)
 
     if (objective.getDueDate() !== "") {
@@ -339,7 +341,7 @@ const UI = (() => {
       
     })
 
-    return objectiveElement;
+    return objectiveElementBox;
   }
 
   function handleClass(element, className) {
@@ -366,6 +368,7 @@ const UI = (() => {
 
   function renderMissions() {
     clear(missionsBox);
+    checkStoredObjectives()
     const questArray = test.getQuestMenu().getMissions();
     for (const mission of questArray) {
       missionsBox.appendChild(createMissionElement(mission));
@@ -381,6 +384,7 @@ const UI = (() => {
       objectivesBox.appendChild(createObjectiveElement(objective, "Today"));
     }
   }
+  console.log(test.getQuestMenu().getMissions())
 
   renderToday();  
 
