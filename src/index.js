@@ -270,8 +270,8 @@ const UI = (() => {
 
     return missionElement;
   }
-
-  // creates objective element using objective object
+  // TODO add status to objective?
+  // Creates objective element using objective object
   function createObjectiveElement(objective, missionName) {
     const objectiveElement = document.createElement('li');
     objectiveElement.classList.add('objective');
@@ -286,17 +286,15 @@ const UI = (() => {
       if (objectiveCheckBox.checked) {
         test.deleteObjective(missionName, objectiveText.textContent)
         renderObjectives(test.getQuestMenu().getMission(missionName))
+        console.log(test.getQuestMenu().getMission(missionName).getObjectives())
       }
     })
-
-    // TODO animate description box
 
     const objectiveDescriptionBox = document.createElement("div")
     objectiveDescriptionBox.classList.add("objective-description")
 
     const objectiveDescription = document.createElement("div")
     
-    // TODO add listener to expand obj to show description
     if (objective.getDescription() === "") {
       objectiveDescription.textContent = "No description"
     } else {
@@ -304,7 +302,7 @@ const UI = (() => {
     }
     // TODO listener/button to edit name, description, and date of objective
 
-    objectiveElement.append(objectiveCheckBox, objectiveText)
+    objectiveElement.append(objectiveCheckBox, objectiveText, objectiveDescriptionBox)
     objectiveDescriptionBox.appendChild(objectiveDescription)
 
     if (objective.getDueDate() !== "") {
@@ -317,7 +315,35 @@ const UI = (() => {
       objectiveElement.appendChild(objectiveDueDate)
     }
 
+    // TODO place descriptionbox inside a container with objective element to allow editing
+
+    objectiveElement.addEventListener("click", (e) => {
+      // Removes focus class from unselected objectives
+      document.querySelectorAll(".objective").forEach(el => {
+        if(el !== objectiveElement) {
+          el.classList.remove("focus") 
+        }
+      })
+      // Removes show class from unselected objectives, hiding their descriptions
+      document.querySelectorAll(".objective-description").forEach(el => {
+        if (el.closest(".objective").textContent !== objectiveElement.textContent) {
+          el.classList.remove("show")
+        } else {
+          el.classList.toggle("show")
+        }
+      })
+      handleClass(objectiveElement, "focus")
+    })
+
+    objectiveDescriptionBox.addEventListener("click", () => {
+      
+    })
+
     return objectiveElement;
+  }
+
+  function handleClass(element, className) {
+    element.classList.toggle(className)
   }
 
   function clear(element) {
