@@ -4,37 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Quests</title>
-    <link rel="stylesheet" href="../src/style.css">
 </head>
 <body>
-        <div class="main">
-            <header>
-                <h1>Quest Menu</h1>
-            </header>
-            <div class="quest-box">
-                <div class="sidebar">
-                    <h2 class="sideheader">Missions</h2>
-                    <ul class="missions">
-                    </ul>
-                    <div class="button-box"><button id="add-mission">Add Mission</button></div>
-                </div>
-                <div class="content-box">
-                    <h2 class="objheader">Objectives</h2>
-                    <div style="display: none;" class="empty-obj-message">There are no objectives for this mission</div>
-                    <ul class="objectives">
-                    </ul>
-                    <div class="button-box"><button id="add-objective">Add Objectives</button></div>
-                </div>
-            </div>
-            <footer>
-                <div class="footer-content">
-                    <p>&copy; Lyza Rivera. All rights reserved. <a href="https://github.com/AlixiaDae" target="_blank"><span class="fa-brands fa-github"></span></a></p>
-                </div>
-            </footer>
+    <header>
+        <h1>Your Quests</h1>
+    </header>
+    <main>
+        <div class="sidebar">
+            <h2>Missions</h2>
+            <ul class="missions-list">
+
+            </ul>
+            <button id="add-mission"></button>
         </div>
 
-    <script src="https://kit.fontawesome.com/6d3d1d74bf.js" crossorigin="anonymous"></script>
+        <div class="content">
+            <h2>Objectives</h2>
+            <section class="objective-box">
+                <form class="mission-form">
+                    <input type="text" name="missionName" id="missionName" placeholder="Mission name">
+                    <button id="create-mission">Create mission</button>
+                </form>
+                <form class="objective-form">
+                    <input type="text" name="objName" id="objName" placeholder="Objective name">
+                    <input type="text" name="objDescription" id="objDescription" placeholder="Objective description">
+                    <input type="date" name="objDate" id="objDate">
+                    <select name="objMisionName" id="objMissionName"></select>
+                    <button id="create-objective">Create objective</button>
+                </form>
+            </section>
+            <button id="add-objective"></button>
+        </div>
+    </main>
+    <footer>
+        
+    </footer>
     <script src="./main.js"></script>
-    
 </body>
 </html>
