@@ -2,17 +2,170 @@
 
 body {
     height: 100vh;
+    font-family: $mainFont;
+    color: $vibrant-pink;
+    @include flex(column, "", "")
 }
 
 header {
     text-align: center;
     padding: 1rem;
+    font-size: 2rem;
+    background-color: $cream;
+    color: darken($vibrant-pink, 10%);
 }
 
 main {
+    @include flex(row, "", "");
+    flex-grow: 1;
+    background-color: $cream;
+    border: 1px solid $pink;
+
+    .sidebar {
+        width: 500px;
+        text-align: center;
+        border-right: 1px solid $pink;
+        position: relative;
+
+        h2 {
+            padding: 1rem;
+            font-size: 2rem;
+            border-bottom: 1px solid $pink;
+        }
+
+        #add-mission {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 170px;
+            border: none;
+            border-radius: 5px;
+            padding: .5rem;
+            font-family: $mainFont;
+            font-weight: weight(semi-bold);
+            font-size: 1.4rem;
+            background-color: $green;
+            color: whitesmoke;
+            box-shadow: -3px -3px inset lighten($green, 10%);
+
+            &:hover {
+                cursor: pointer;
+                background-color: lighten($green, 10%);
+                box-shadow: -3px -3px inset lighten($green, 5%);
+                font-weight: weight(bold);
+            }
+        }
+    }
+
+    .content {
+        width: 90%;
+        text-align: center;
+        position: relative;
+        @include flex(column, "", "");
+
+        h2 {
+            padding: 1rem;
+            font-size: 2rem;
+            border-bottom: 1px solid $pink;
+        }
+
+        .objective-box {
+            height: 100%;
+            @include flex(column, center, center);
+
+            .mission-form,
+            .objective-form {
+                display: none;
+            }
+
+            .showForm {
+                display: block;
+            }
+
+            form {
+                background-color: $pink;
+                margin-top: -100px;
+                padding: 1.5rem;
+                width: 350px;
+                gap: 15px;
+                border-radius: 15px;
+                box-shadow: -3px -3px inset darken($pink, 10%);
+                @include flex(column, center, center);
     
+                input {
+                    font-family: $mainFont;
+                    width: 100%;
+                    height: 30px;
+                    padding-left: 1rem;
+                    border-radius: 5px;
+                }
+    
+                select {
+                    height: 30px;
+                    width: 100%;
+                }
+    
+                button {
+                    width: 100%;
+                    border: none;
+                    border-radius: 5px;
+                    font-family: $mainFont;
+                    font-size: 1rem;
+                    font-weight: weight(semi-bold);
+                    height: 35px;
+                    color: whitesmoke;
+                    background-color: $green;
+                    box-shadow: -3px -3px inset lighten($green, 10%);
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: lighten($green, 10%);
+                        box-shadow: -3px -3px inset lighten($green, 5%);
+                        font-weight: weight(bold);
+                    }
+                }
+            }
+    
+        }
+
+        
+        #add-objective {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 170px;
+            border: none;
+            border-radius: 5px;
+            padding: .5rem;
+            font-family: $mainFont;
+            font-weight: weight(semi-bold);
+            font-size: 1.4rem;
+            background-color: $green;
+            color: whitesmoke;
+            box-shadow: -3px -3px inset lighten($green, 10%);
+
+            &:hover {
+                cursor: pointer;
+                background-color: lighten($green, 10%);
+                box-shadow: -3px -3px inset lighten($green, 5%);
+                font-weight: weight(bold);
+            }
+        }
+    }
 }
 
 footer {
+    background-color: black;
+    color: whitesmoke;
+    padding: .8rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: weight(semi-bold);
 
+    a {
+        color: white;
+        &:hover {
+            color: $medium-pink;
+        }
+    }
 }
