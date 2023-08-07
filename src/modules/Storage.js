@@ -4,7 +4,7 @@ import Objective from "./Objective"
 import QuestMenu from "./QuestMenu"
 
 
-export  default class Storage {  
+export default class Storage {  
     saveQuestMenu(data) {
         localStorage.setItem("questmenu", JSON.stringify(data))
     }

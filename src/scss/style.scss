@@ -12,25 +12,63 @@ header {
     padding: 1rem;
     font-size: 2rem;
     background-color: $cream;
-    color: darken($vibrant-pink, 10%);
+    color: darken($vibrant-pink, 5%);
 }
 
 main {
     @include flex(row, "", "");
     flex-grow: 1;
     background-color: $cream;
-    border: 1px solid $pink;
+    padding: 1rem;
 
     .sidebar {
         width: 500px;
         text-align: center;
-        border-right: 1px solid $pink;
+        border-top: 1px solid $vibrant-pink;
+        border-right: 1px solid $medium-pink;
+        border-bottom: 1px solid $vibrant-pink;
+        border-left: 1px solid $vibrant-pink;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
         position: relative;
 
         h2 {
             padding: 1rem;
             font-size: 2rem;
-            border-bottom: 1px solid $pink;
+            border-bottom: 1px solid $medium-pink;
+        }
+
+        .missions-list {
+            display: grid;
+            padding: .3rem;
+            grid-template-rows: repeat(10, 50px);
+
+            li {
+                font-size: 1.5rem;
+                padding-left: 2rem;
+                gap: 10px;
+                color: darken($vibrant-pink, 5%);
+                border-radius: 5px;
+                @include flex(row, center, "");
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $soft-pink;
+
+                    p {
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+
+
+                span {
+                    color: black;
+                }
+
+            }
+
+            
         }
 
         #add-mission {
@@ -61,24 +99,46 @@ main {
         width: 90%;
         text-align: center;
         position: relative;
+        border-top: 1px solid $vibrant-pink;
+        border-right: 1px solid $vibrant-pink;
+        border-bottom: 1px solid $vibrant-pink;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
         @include flex(column, "", "");
 
         h2 {
             padding: 1rem;
             font-size: 2rem;
-            border-bottom: 1px solid $pink;
+            border-bottom: 1px solid $medium-pink;
         }
 
         .objective-box {
             height: 100%;
             @include flex(column, center, center);
 
+            .objectives {
+                height: 100%;
+                width: 100%;
+                padding: 1rem;
+                color: black;
+                display: grid;
+                grid-template-rows: repeat(10, 40px);
+                
+
+                li {
+                    text-align: left;
+                    font-size: 1.5rem;
+                    border-bottom: 1px solid $pink;
+                    letter-spacing: 1.5px;
+                }
+            }
+
             .mission-form,
             .objective-form {
                 display: none;
             }
 
-            .showForm {
+            .show-form {
                 display: flex;
             }
 
@@ -88,6 +148,7 @@ main {
                 padding: 1.5rem;
                 width: 350px;
                 gap: 15px;
+                position: absolute;
                 border-radius: 15px;
                 box-shadow: -3px -3px inset darken($pink, 10%);
                 @include flex(column, center, center);
@@ -98,6 +159,9 @@ main {
                     height: 30px;
                     padding-left: 1rem;
                     border-radius: 5px;
+                    font-size: 1rem;
+                    font-weight: weight(bold);
+                    letter-spacing: 2px;
                 }
     
                 select {
@@ -163,6 +227,7 @@ footer {
     font-weight: weight(semi-bold);
 
     a {
+        text-decoration: none;
         color: white;
         &:hover {
             color: $medium-pink;
