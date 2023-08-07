@@ -4,9 +4,6 @@ import Storage from './modules/Storage';
 
 const quest = new Storage()
 
-const questStorage = quest.getQuestMenu()
-// console.log(questStorage.getMissions())
-
 const testMission = new Mission("Testing mission")
 quest.addMission(testMission)
 
@@ -21,7 +18,7 @@ function toggleForm(button) {
 }
 
 function createMissionElement(mission) {
-    if(mission.getName() === "Today" || mission.getName() === "This Week") {
+    if(mission.getName() === "Today") {
         const missionElement = document.createElement("li")
         const missionIcon = document.createElement("span")
         missionIcon.classList.add("fa-solid", "fa-map-pin", "no-hover")
@@ -33,15 +30,22 @@ function createMissionElement(mission) {
     } else {
         const missionElement = document.createElement("li")
         const missionIcon = document.createElement("span")
-        missionIcon.classList.add("fa-solid", "fa-map-pin", "no-hover")
+        missionIcon.classList.add("fa-solid", "fa-map-pin")
         const missionText = document.createElement("p")
         missionText.textContent = mission.getName()
         const closeBtn = document.createElement("span")
         const elId = missionText.textContent.split(" ")
         closeBtn.id = elId.join("").toLowerCase()
+        closeBtn.classList.add("fa-solid", "fa-x")
+        
+        closeBtn.addEventListener("click", () => {
+            quest.deleteMission(mission.getName())
+            console.log(quest.getQuestMenu().getMissions())
+            displayMissions(quest.getQuestMenu().getMissions())
+        })
 
-    // TODO enable name editing
-    // TODO delete mission function
+        // TODO enable name editing(?)
+
         missionElement.append(missionIcon, missionText, closeBtn)
         return missionElement
     }
@@ -50,6 +54,7 @@ function createMissionElement(mission) {
 function displayMissions(missionList) {
     const list = missionList
     const missionsListElement = document.querySelector(".missions-list")
+    missionsListElement.textContent = ""
     for(const mission of list) {
         missionsListElement.appendChild(createMissionElement(mission))
     }
@@ -63,7 +68,7 @@ function clear(element) {
 }
 
 function render() {
-    displayMissions(questStorage.getMissions())
+    displayMissions(quest.getQuestMenu().getMissions())
 }
 
 export {

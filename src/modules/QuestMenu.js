@@ -6,7 +6,6 @@ export default class QuestMenu {
     constructor() {
         this.missions = []
         this.missions.push(new Mission("Today"))
-        this.missions.push(new Mission("This Week"))
     }
 
     setMissions(missions) {
