@@ -43,6 +43,10 @@ main {
             padding: .3rem;
             grid-template-rows: repeat(10, 50px);
 
+            .active-mission {
+                background-color: lighten($pink, 10%);
+            }
+
             li {
                 font-size: 1.5rem;
                 padding-left: 2rem;
@@ -54,16 +58,28 @@ main {
 
                 &:hover {
                     cursor: pointer;
-                    background-color: $soft-pink;
+                    background-color: lighten($pink, 10%);
+
+                    .fa-map-pin {
+                        transform: rotate(0deg);
+                        text-decoration: underline;
+                    }
 
                     p {
                         cursor: pointer;
                         text-decoration: underline;
                     }
+
                 }
 
                 .fa-map-pin {
                     color: darken($vibrant-pink, 15%);
+                    transform: rotate(90deg);
+                }
+
+                .pinned {
+                    transform: rotate(0deg);
+                    text-decoration: underline;
                 }
 
                 .fa-x {
@@ -137,14 +153,63 @@ main {
                 padding: 1rem;
                 color: black;
                 display: grid;
-                grid-template-rows: repeat(10, 40px);
+                grid-template-rows: repeat(10, 45px);
                 
+                .no-objectives {
+                    font-size: 24px;
+                }
 
                 li {
+                    
                     text-align: left;
                     font-size: 1.5rem;
                     border-bottom: 1px solid $pink;
                     letter-spacing: 1.5px;
+                }
+
+                .objective-element {
+                    padding: .5rem;
+                    @include flex(row, center, "");
+
+                    input {
+                        width: 0;
+                        height: 0;
+                        visibility: hidden;
+                    }
+
+                    input:checked + label:after {
+                        background-color: darken($pink, 10%);
+                    }
+
+                    label {
+                        width: 30px;
+                        height: 30px;
+                        position: relative;
+                        background-color: darken($cream, 5%);
+                        border-radius: 200px;
+                        box-shadow: -2px -2px inset darken($cream, 15%), 2px 2px inset darken($cream, 15%);
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+
+                        &:after {
+                            content: "";
+                            width: 22px;
+                            height: 22px;
+                            position: absolute;
+                            top: 4px;
+                            left: 4px;
+                            border-radius: 200px;
+                        }
+                    }
+
+                    div {
+                        width: 100%;
+                        padding-left: 1rem;
+                        @include flex(row, center, space-between)
+
+                    }
                 }
             }
 
