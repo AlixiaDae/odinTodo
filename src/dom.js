@@ -9,13 +9,22 @@ quest.addMission(testMission)
 
 const testObjective = new Objective("Test Objective", "this is for testing", "2023-08-10")
 quest.addObjective("Today", testObjective)
+const anotherObjective = new Objective("Second objective", "second test", "2023-08-11")
+quest.addObjective("Today", anotherObjective)
+
 
 function handleClass(element,className,job) {
     if(job === "remove") {
         element.classList.remove(className)
-    } else {
+    } else if(job === "add") {
         element.classList.add(className)
+    } else {
+        element.classList.toggle(className)
     }
+}
+
+function handleDescription(element) {
+    
 }
 
 function toggleForm(button) {
@@ -76,6 +85,10 @@ function createObjectiveElement(objective) {
     objCheckboxLabel.setAttribute("for", objective.getName())
 
     const objectiveBox = document.createElement("div")
+    objectiveBox.classList.add("objective-box")
+
+    const textDateBox = document.createElement("div")
+    textDateBox.classList.add("obj-textdate-box")
 
     const objectiveText = document.createElement("p")
     objectiveText.textContent = objective.getName()
@@ -83,7 +96,12 @@ function createObjectiveElement(objective) {
     const objectiveDate = document.createElement("p")
     objectiveDate.textContent = objective.getDateFormatted()
 
-    objectiveBox.append(objectiveText, objectiveDate)
+    const objectiveDescription = document.createElement("p")
+    objectiveDescription.classList.add("objective-description")
+    objectiveDescription.textContent = objective.getDescription()
+
+    textDateBox.append(objectiveText, objectiveDate)
+    objectiveBox.append(textDateBox, objectiveDescription)
     objectiveElement.append(objCheckbox, objCheckboxLabel, objectiveBox)
     return objectiveElement
 

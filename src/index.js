@@ -14,8 +14,10 @@ showFormButtons.forEach(button => { button.addEventListener("click", dom.toggleF
 dom.render()
 
 const missionElements = document.querySelectorAll(".mission-element")
-const missionTextElements = document.querySelectorAll(".mission-element p")
 const pins = document.querySelectorAll(".fa-map-pin")
+
+missionElements[0].classList.add("active-mission")
+pins[0].classList.add("pinned")
 
 missionElements.forEach(mission => {
     mission.addEventListener("click", (e) => {
@@ -29,5 +31,27 @@ missionElements.forEach(mission => {
         dom.handleClass(mission, "active-mission", "add")
         dom.handleClass(mission.children[0], "pinned", "add")
         dom.setActiveMission(dom.quest.getQuestMenu().getMission(missionName))
+    })
+})
+
+const objectiveTextDateBox = document.querySelectorAll(".obj-textdate-box") 
+const objectiveDescriptions = document.querySelectorAll(".objective-description")
+
+objectiveTextDateBox.forEach(obj => {
+    obj.addEventListener("click", (e) => {
+        objectiveTextDateBox.forEach(el => {
+            if(el !== e.target) {
+                el.classList.remove("active-mission")
+                el.closest(".objective-box").querySelector(".objective-description").classList.remove("active-objective-description")
+            }
+        })
+        if(e.target.closest(".objective-box").querySelector(".objective-description").classList.contains("active-objective-description")) {
+            e.target.classList.remove("active-objective")
+            e.target.closest(".objective-box").querySelector(".objective-description").classList.remove("active-objective-description")
+            return
+        }
+        e.target.classList.toggle("active-objective")
+        e.target.closest(".objective-box").querySelector(".objective-description").classList.toggle("active-objective-description")
+        
     })
 })
