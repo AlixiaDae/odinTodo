@@ -236,9 +236,14 @@ main {
                             background-color: $pink;
                             z-index: 3;
                             padding: .5rem;
+                            transition: all 0.5s ease;
+                            opacity: 0;
                         }
 
                         .active-objective-description {
+                            opacity: 1;
+                            
+                            transform: translateY(0);
                             height: 50px;
                             visibility: visible;
                             background-color: darken($pink, 5%);

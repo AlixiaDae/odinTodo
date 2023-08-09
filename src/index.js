@@ -2,17 +2,18 @@ import './scss/style.scss'
 import Storage from './modules/Storage'
 import * as dom from './dom'
 
+// TODO move listeners to creator functions
+
+
+dom.render()
+
+// Listeners
+
 const showFormButtons = document.querySelectorAll(".show-form-button")
 
 showFormButtons.forEach(button => { button.addEventListener("click", dom.toggleForm) })
 
-
-
-// when a li is clicked, add .pinned class to span pin icon
-// for each mission element, addEventListener clicked and add pinned class to pin
-
-dom.render()
-
+/*
 const missionElements = document.querySelectorAll(".mission-element")
 const pins = document.querySelectorAll(".fa-map-pin")
 
@@ -28,6 +29,7 @@ missionElements.forEach(mission => {
             })
         })
         const missionName = e.target.textContent
+        console.log(missionName)
         dom.handleClass(mission, "active-mission", "add")
         dom.handleClass(mission.children[0], "pinned", "add")
         dom.setActiveMission(dom.quest.getQuestMenu().getMission(missionName))
@@ -35,13 +37,12 @@ missionElements.forEach(mission => {
 })
 
 const objectiveTextDateBox = document.querySelectorAll(".obj-textdate-box") 
-const objectiveDescriptions = document.querySelectorAll(".objective-description")
 
 objectiveTextDateBox.forEach(obj => {
     obj.addEventListener("click", (e) => {
         objectiveTextDateBox.forEach(el => {
             if(el !== e.target) {
-                el.classList.remove("active-mission")
+                el.classList.remove("active-objective")
                 el.closest(".objective-box").querySelector(".objective-description").classList.remove("active-objective-description")
             }
         })
@@ -55,3 +56,6 @@ objectiveTextDateBox.forEach(obj => {
         
     })
 })
+
+*/
+

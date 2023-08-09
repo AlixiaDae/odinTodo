@@ -12,21 +12,6 @@ quest.addObjective("Today", testObjective)
 const anotherObjective = new Objective("Second objective", "second test", "2023-08-11")
 quest.addObjective("Today", anotherObjective)
 
-
-function handleClass(element,className,job) {
-    if(job === "remove") {
-        element.classList.remove(className)
-    } else if(job === "add") {
-        element.classList.add(className)
-    } else {
-        element.classList.toggle(className)
-    }
-}
-
-function handleDescription(element) {
-    
-}
-
 function toggleForm(button) {
     if(button.target.textContent === "Add Mission") {
       document.querySelector(".mission-form").classList.toggle("show-form")
@@ -45,6 +30,18 @@ function createMissionElement(mission) {
         missionIcon.classList.add("fa-solid", "fa-map-pin")
         const missionText = document.createElement("p")
         missionText.textContent = mission.getName()
+
+        missionElement.addEventListener("click", () => {
+            document.querySelectorAll(".mission-element").forEach(mission => {
+                mission.classList.remove("active-mission")
+                document.querySelectorAll(".fa-map-pin").forEach(pin => {
+                    pin.classList.remove("pinned")
+                })
+            })
+            missionElement.classList.add("active-mission")
+            missionIcon.classList.add("pinned")
+            setActiveMission(quest.getQuestMenu().getMission(missionText.textContent))
+        })
         
         missionElement.append(missionIcon, missionText)
         return missionElement
@@ -64,6 +61,18 @@ function createMissionElement(mission) {
             quest.deleteMission(mission.getName())
             console.log(quest.getQuestMenu().getMissions())
             displayMissions(quest.getQuestMenu().getMissions())
+        })
+
+        missionElement.addEventListener("click", () => {
+            document.querySelectorAll(".mission-element").forEach(mission => {
+                mission.classList.remove("active-mission")
+                document.querySelectorAll(".fa-map-pin").forEach(pin => {
+                    pin.classList.remove("pinned")
+                })
+            })
+            missionElement.classList.add("active-mission")
+            missionIcon.classList.add("pinned")
+            setActiveMission(quest.getQuestMenu().getMission(mission.getName()))
         })
 
         // TODO enable name editing(?)
@@ -99,6 +108,18 @@ function createObjectiveElement(objective) {
     const objectiveDescription = document.createElement("p")
     objectiveDescription.classList.add("objective-description")
     objectiveDescription.textContent = objective.getDescription()
+
+
+    textDateBox.addEventListener("click", (e) => {
+        document.querySelectorAll(".obj-textdate-box").forEach(el => {
+            if(el !== e.target) {
+                el.classList.remove("active-objective")
+                el.closest(".objective-box").querySelector(".objective-description").classList.remove("active-objective-description")
+            }
+        })
+        textDateBox.classList.toggle("active-objective")
+        objectiveDescription.classList.toggle("active-objective-description")
+    })
 
     textDateBox.append(objectiveText, objectiveDate)
     objectiveBox.append(textDateBox, objectiveDescription)
@@ -149,14 +170,18 @@ function clear(element) {
 function render() {
     displayMissions(quest.getQuestMenu().getMissions())
     setActiveMission(quest.getQuestMenu().getMission("Today"))
+    document.querySelectorAll(".mission-element")[0].classList.add("active-mission")
+    document.querySelectorAll(".fa-map-pin")[0].classList.add("pinned")
+}
+
+function renderToday() {
+    
 }
 
 export {
-    handleClass,
     displayMissions,
     clear,
     toggleForm,
     render,
     setActiveMission,
-    quest
 }
