@@ -157,7 +157,7 @@ main {
                 grid-template-rows: repeat(10, 45px);
                 row-gap: 5px;
                 
-                .no-objectives {
+                .message {
                     font-size: 24px;
                 }
 
@@ -285,8 +285,7 @@ main {
                 }
     
                 select {
-                    height: 30px;
-                    width: 100%;
+                    @extend input
                 }
     
                 button {
