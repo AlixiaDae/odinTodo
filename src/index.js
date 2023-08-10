@@ -63,6 +63,16 @@ submitObjectiveFormBtn.addEventListener("click", (e) => {
     if(objDate.value === "") return
     const newObjective = new Objective(objNameInput.value, objDescription.value, objDate.value)
     dom.quest.addObjective(selectMission.value, newObjective)
+    const missionElements = document.querySelectorAll(".mission-element")
     dom.setActiveMission(dom.quest.getQuestMenu().getMission(selectMission.value))
+    missionElements.forEach(mission => {
+        if(mission.textContent === selectMission.value) {
+            mission.classList.add("active-mission")
+            mission.children[0].classList.add("pinned")
+        } else {
+            mission.classList.remove("active-mission")
+            mission.children[0].classList.remove("pinned")
+        }
+    })
     objectiveForm.classList.remove("show-form")
 })
